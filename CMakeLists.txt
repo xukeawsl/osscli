@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(osscli_test LANGUAGE CXX)
+project(osscli_test)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
@@ -16,7 +16,7 @@ LIST(APPEND _libs alibabacloud-oss-cpp-sdk ssl curl crypto pthread dl boost_prog
 
 include_directories(${_headers})
 
-add_executable(osscli ${_sources})
+add_executable(osscli main.cpp ${_sources})
 
 target_link_directories(osscli PRIVATE ${_libpath})
 
