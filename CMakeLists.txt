@@ -2,11 +2,13 @@ cmake_minimum_required(VERSION 3.10)
 
 project(osscli_test)
 
+add_subdirectory(sdk)
+
 file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 LIST(APPEND _sources ${CPP_FILES})
 
-LIST(APPEND _libpath sdk/lib third-party/boost/lib)
+LIST(APPEND _libpath third-party/boost/lib)
 
 LIST(APPEND _headers sdk/include include third-party/boost/include third-party/nlohmann/include)
 
