@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(osscli_test)
 
+include(GNUInstallDirs)
+
 add_subdirectory(sdk)
 
 file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -12,7 +14,7 @@ LIST(APPEND _libpath third-party/boost/lib)
 
 LIST(APPEND _headers sdk/include include third-party/boost/include third-party/nlohmann/include)
 
-LIST(APPEND _libs alibabacloud-oss-cpp-sdk ssl curl crypto pthread dl boost_program_options)
+LIST(APPEND _libs cpp-sdk ssl curl crypto pthread dl boost_program_options)
 
 include_directories(${_headers})
 
