@@ -1,5 +1,11 @@
 # 阿里云 OSS 对象存储客户端----osscli
 
+
+## 安装 SDK 依赖
+```bash
+sudo apt-get install libcurl4-openssl-dev libssl-dev
+```
+
 ## Linux 下构建
 
 ```bash

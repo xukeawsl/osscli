@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 project(osscli_test)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-
 file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 LIST(APPEND _sources ${CPP_FILES})
@@ -19,5 +17,7 @@ include_directories(${_headers})
 link_directories(${_libpath})
 
 add_executable(osscli main.cpp ${_sources})
+
+target_compile_options(osscli PRIVATE "-std=c++14")
 
 target_link_libraries(osscli PRIVATE ${_libs})
