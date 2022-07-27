@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(osscli_test LANGUAGE CXX)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+
+file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+
+LIST(APPEND _sources ${CPP_FILES})
+
+LIST(APPEND _libpath sdk/lib third-party/boost/lib)
+
+LIST(APPEND _headers sdk/include include third-party/boost/include third-party/nlohmann/include)
+
+LIST(APPEND _libs alibabacloud-oss-cpp-sdk ssl curl crypto pthread dl boost_program_options)
+
+include_directories(${_headers})
+
+add_executable(osscli ${_sources})
+
+target_link_directories(osscli PRIVATE ${_libpath})
+
+target_link_libraries(osscli PRIVATE ${_libs})
