@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
 
 project(osscli_test)
 
@@ -16,8 +16,8 @@ LIST(APPEND _libs alibabacloud-oss-cpp-sdk ssl curl crypto pthread dl boost_prog
 
 include_directories(${_headers})
 
-add_executable(osscli main.cpp ${_sources})
+link_directories(${_libpath})
 
-target_link_directories(osscli PRIVATE ${_libpath})
+add_executable(osscli main.cpp ${_sources})
 
 target_link_libraries(osscli PRIVATE ${_libs})
