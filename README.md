@@ -52,7 +52,7 @@ make
 ./osscli --bucket "bucket-name" ping "object-name1" "object-name2" ... "object-nameN"
 ```
 * 根据前缀查找 `Object`
-```
+```bash
 ./osscli --bucket "bucket-name" find "prefix-name"
 ```
 
