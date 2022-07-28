@@ -77,6 +77,10 @@ std::unique_ptr<OssExecutor> OssParser::ParseCommandLine(int ac, char** av) {
             executor->setType(OssExecutor::Type::Put);
         } else if (method == "delete") {
             executor->setType(OssExecutor::Type::Delete);
+        } else if (method == "ping") {
+            executor->setType(OssExecutor::Type::Ping);
+        } else if (method == "find") {
+            executor->setType(OssExecutor::Type::Find);
         }
         executor->setInputFiles(std::move(files));
     } else {

@@ -70,6 +70,8 @@ bool OssExecutor::Execute() {
     case Type::Get:     return Get();
     case Type::Put:     return Put();
     case Type::Delete:  return Delete();
+    case Type::Ping:    return Ping();
+    case Type::Find:    return CommonPrefix();
     default:
         break;
     }
@@ -218,6 +220,52 @@ bool OssExecutor::Delete() {
             std::cout << "[Success] Delete Object : " << input_file << std::endl;
         }
     }
+
+    return true;
+}
+
+bool OssExecutor::Ping() {
+    OSS::ClientConfiguration conf;
+    OSS::OssClient client(getEndpoint().c_str(), getAccessKeyId().c_str(),
+                          getAccessKeySecret().c_str(), conf);
+
+    for (const auto& input_file : input_files) {
+        
+        auto outcome = client.DoesObjectExist(getBucketName().c_str(), input_file.c_str());
+        if (!outcome) {
+            std::cout << "[Error] The Object (" << input_file << ") does not exists!" << std::endl; 
+        } else {
+            std::cout << "[Success] The Object (" << input_file << ") exists!" << std::endl;
+        }
+    }
+
+    return true;
+}
+
+bool OssExecutor::CommonPrefix() {
+    OSS::ClientConfiguration conf;
+    OSS::OssClient client(getEndpoint().c_str(), getAccessKeyId().c_str(),
+                          getAccessKeySecret().c_str(), conf);
+    if (input_files.size() != 1) return false;
+
+    std::string keyPrefix = input_files[0];
+    std::string nextMarker = "";
+    bool isTruncated = false;
+    do {
+        OSS::ListObjectsRequest request(getBucketName().c_str());
+        request.setPrefix(keyPrefix);
+        request.setMarker(nextMarker);
+        auto outcome = client.ListObjects(request);
+
+        if (!outcome.isSuccess()) {
+            PrintErrorMessage(&outcome);
+            return false;
+        }
+
+        PrintHeadMessage(&outcome);
+        nextMarker = outcome.result().NextMarker();
+        isTruncated = outcome.result().IsTruncated();
+    } while (isTruncated);
 
     return true;
 }

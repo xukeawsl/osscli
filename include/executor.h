@@ -5,7 +5,7 @@
 
 class OssExecutor {
 public:
-    enum class Type : int { Create, Head, Get, Put, Delete, None };
+    enum class Type : int { Create, Head, Get, Put, Delete, Ping, Find, None };
 
     OssExecutor();
     explicit OssExecutor(Type t);
@@ -52,6 +52,10 @@ private:
     bool Put();
 
     bool Delete();
+
+    bool Ping();
+
+    bool CommonPrefix();
 
 private:
     Type type;
